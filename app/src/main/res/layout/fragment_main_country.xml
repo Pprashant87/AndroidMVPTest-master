@@ -6,12 +6,36 @@
     android:background="@color/app_bg"
     android:orientation="vertical">
 
-
-
     <include layout="@layout/layout_toolbar" />
-    <include android:id="@+id/layoutRecycleView" android:visibility="visible" layout="@layout/activity_main_content_recycleview" />
-    <include  android:id="@+id/layoutErrorView" android:visibility="gone"
-        layout="@layout/layout_error" />
+
+    <LinearLayout
+        android:id="@+id/layoutRecycleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="@dimen/padding_small"
+            tools:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </LinearLayout>
+
+
+
+    <include
+        android:id="@+id/layoutErrorView"
+        layout="@layout/layout_error"
+        android:visibility="gone" />
 
 </LinearLayout>
 

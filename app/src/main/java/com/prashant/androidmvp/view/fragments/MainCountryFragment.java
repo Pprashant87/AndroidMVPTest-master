@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,7 +53,8 @@ public class MainCountryFragment extends Fragment implements MainCountryView {
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private Toolbar mToolbar;
     private Button mBtnRetryError;
-    private View mLayoutRecycleView, mLayoutErrorView;
+    private LinearLayout mLayoutRecycleView;
+    private View mLayoutErrorView;
     private TextView mTxtMessageError;
     private Country mCountryList;
 
@@ -67,7 +69,6 @@ public class MainCountryFragment extends Fragment implements MainCountryView {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View myFragmentView = inflater.inflate(R.layout.fragment_main_country, container, false);
         setUpView(myFragmentView);
-        setUpClickListeners();
         return myFragmentView;
     }
 
@@ -84,18 +85,18 @@ public class MainCountryFragment extends Fragment implements MainCountryView {
         mToolbar.setTitleTextColor(Color.WHITE);
         mBtnRetryError = (Button) mView.findViewById(R.id.btnRetryError);
         mTxtMessageError = (TextView) mView.findViewById(R.id.txtMessageError);
-        mLayoutRecycleView = (View) mView.findViewById(R.id.layoutRecycleView);
+        mLayoutRecycleView = (LinearLayout) mView.findViewById(R.id.layoutRecycleView);
         mLayoutErrorView = (View) mView.findViewById(R.id.layoutErrorView);
-        mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.swipe_refresh_layout);
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.recycler_view);
+        mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.swipe_refresh_layout);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mCountryPresenter = new CountryPresenter(getActivity(), this);
-
+        setUpClickListeners();
     }
 
     private void setUpClickListeners() {
 
-        if (mSwipeRefreshLayout != null) {
+//        if (mSwipeRefreshLayout != null) {
             mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
 
             mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -105,7 +106,7 @@ public class MainCountryFragment extends Fragment implements MainCountryView {
                     setUpFetchData();
                 }
             });
-        }
+//        }
 
         mBtnRetryError.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -245,8 +246,10 @@ public class MainCountryFragment extends Fragment implements MainCountryView {
             Country mCountryList = (Country) savedInstanceState.getSerializable(AppConstants.COUNTRY_KEY);
             updateListView(mCountryList);
         }
+    }
 
-
-
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 }
