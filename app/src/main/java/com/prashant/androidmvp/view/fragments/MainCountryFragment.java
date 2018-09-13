@@ -33,6 +33,7 @@ import com.prashant.androidmvp.models.Row;
 import com.prashant.androidmvp.presenters.CountryPresenter;
 import com.prashant.androidmvp.utils.AppConstants;
 import com.prashant.androidmvp.utils.AppController;
+import com.prashant.androidmvp.utils.ListUtils;
 import com.prashant.androidmvp.utils.Logger;
 import com.prashant.androidmvp.utils.network.ConnectivityReceiver;
 import com.prashant.androidmvp.view.adapters.CountryAdapter;
@@ -40,8 +41,9 @@ import com.prashant.androidmvp.view.listener.MainCountryView;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class MainCountryFragment extends Fragment implements MainCountryView, ConnectivityReceiver.ConnectivityReceiverListener {
+public class MainCountryFragment extends Fragment implements MainCountryView {
 
     private static final String TAG = MainCountryFragment.class.getSimpleName();
     private RecyclerView mRecyclerView;
@@ -69,6 +71,8 @@ public class MainCountryFragment extends Fragment implements MainCountryView, Co
         return myFragmentView;
     }
 
+
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -76,19 +80,24 @@ public class MainCountryFragment extends Fragment implements MainCountryView, Co
     }
 
     private void setUpView(View mView) {
-        AppController.getInstance().setConnectivityListener(this);
         mToolbar = (Toolbar) mView.findViewById(R.id.toolbar);
         mToolbar.setTitleTextColor(Color.WHITE);
         mBtnRetryError = (Button) mView.findViewById(R.id.btnRetryError);
         mTxtMessageError = (TextView) mView.findViewById(R.id.txtMessageError);
         mLayoutRecycleView = (View) mView.findViewById(R.id.layoutRecycleView);
         mLayoutErrorView = (View) mView.findViewById(R.id.layoutErrorView);
-        mRecyclerView = (RecyclerView) mView.findViewById(R.id.recycler_view);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.swipe_refresh_layout);
+        mRecyclerView = (RecyclerView) mView.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mCountryPresenter = new CountryPresenter(getActivity(), this);
+
+    }
+
+    private void setUpClickListeners() {
+
         if (mSwipeRefreshLayout != null) {
             mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
+
             mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override
                 public void onRefresh() {
@@ -98,11 +107,6 @@ public class MainCountryFragment extends Fragment implements MainCountryView, Co
             });
         }
 
-    }
-
-    private void setUpClickListeners() {
-
-
         mBtnRetryError.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,6 +114,7 @@ public class MainCountryFragment extends Fragment implements MainCountryView, Co
             }
         });
     }
+
 
     private void setUpFetchData() {
         if (mCountryPresenter != null) {
@@ -166,8 +171,13 @@ public class MainCountryFragment extends Fragment implements MainCountryView, Co
             List<Row> mRowList = mCountryList.getRows();
             setTitleForActionBar(mCountryList.getTitle());
             if (mRowList != null) {
-                mCountryAdapter = new CountryAdapter(getActivity(), mRowList);
-                mRecyclerView.setAdapter(mCountryAdapter);
+                try {
+                    mRowList = ListUtils.removeEmptyList(mRowList);
+                    mCountryAdapter = new CountryAdapter(getActivity(), mRowList);
+                    mRecyclerView.setAdapter(mCountryAdapter);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -200,10 +210,10 @@ public class MainCountryFragment extends Fragment implements MainCountryView, Co
         mLayoutRecycleView.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void onNetworkConnectionChanged(boolean isConnected) {
-        checkInternetConnectivity(isConnected);
-    }
+//    @Override
+//    public void onNetworkConnectionChanged(boolean isConnected) {
+//        checkInternetConnectivity(isConnected);
+//    }
 
     private void checkInternetConnectivity(boolean isConnected)
     {
@@ -235,6 +245,8 @@ public class MainCountryFragment extends Fragment implements MainCountryView, Co
             Country mCountryList = (Country) savedInstanceState.getSerializable(AppConstants.COUNTRY_KEY);
             updateListView(mCountryList);
         }
+
+
 
     }
 }

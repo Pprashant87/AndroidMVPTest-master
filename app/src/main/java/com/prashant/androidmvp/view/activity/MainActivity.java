@@ -19,7 +19,7 @@ import com.prashant.androidmvp.utils.Logger;
 import com.prashant.androidmvp.utils.network.ConnectivityReceiver;
 import com.prashant.androidmvp.view.fragments.MainCountryFragment;
 
-public class MainActivity extends AppCompatActivity   {
+public class MainActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener  {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private CoordinatorLayout mCoordinatorLayout;
@@ -49,6 +49,12 @@ public class MainActivity extends AppCompatActivity   {
     }
 
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AppController.getInstance().setConnectivityListener(this);
+    }
+
     private void setFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction =
@@ -58,4 +64,32 @@ public class MainActivity extends AppCompatActivity   {
     }
 
 
+    private void showSnack(boolean isConnected) {
+        String message;
+        int color;
+        if (isConnected) {
+            message = getResources().getString(R.string.connected_to_internet);
+            color = Color.WHITE;
+        } else {
+            message = getResources().getString(R.string.not_connected_to_internet);
+            color = Color.RED;
+        }
+
+        Snackbar snackbar = Snackbar
+                .make(mCoordinatorLayout, message, Snackbar.LENGTH_LONG);
+
+        View sbView = snackbar.getView();
+        TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(color);
+        snackbar.show();
+    }
+
+    /**
+     * Callback will be triggered when there is change in
+     * network connection
+     */
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        showSnack(isConnected);
+    }
 }
