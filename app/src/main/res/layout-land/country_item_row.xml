@@ -25,7 +25,7 @@
                 android:layout_height="@dimen/image_item_row"
                 android:layout_alignParentRight="true"
                 android:layout_centerInParent="true"
-                android:scaleType="fitXY"
+                android:scaleType="fitCenter"
                 android:src="@mipmap/ic_launcher" />
 
             <LinearLayout

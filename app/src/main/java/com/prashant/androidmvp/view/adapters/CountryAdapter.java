@@ -3,17 +3,16 @@ package com.prashant.androidmvp.view.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 import com.prashant.androidmvp.R;
 import com.prashant.androidmvp.models.Row;
-
-
 import java.util.List;
 
 public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryViewHolder> {
@@ -42,27 +41,26 @@ public class CountryAdapter extends RecyclerView.Adapter<CountryAdapter.CountryV
 
             if (mRowItem != null) {
 
-                if (mRowItem.getTitle() != null) {
+                if (!TextUtils.isEmpty(mRowItem.getTitle())) {
                     holder.mTitle.setText(mRowItem.getTitle());
                 } else {
                     holder.mTitle.setText("");
                 }
 
-                if (mRowItem.getDescription() != null) {
+                if (!TextUtils.isEmpty(mRowItem.getDescription())) {
                     holder.mDescription.setText(mRowItem.getDescription());
                 } else {
                     holder.mDescription.setText("");
                 }
 
-                if (mRowItem.getImageHref() != null) {
-                    String url = mRowItem.getImageHref();
-                    Glide.with(mContext)
-                            .load(url)
-                            .placeholder(R.drawable.ic_launcher_background)
-                            .into(holder.mImageHref);
-                } else {
-                    holder.mImageHref.setImageDrawable(null);
-                }
+                String url = mRowItem.getImageHref();
+                Glide.with(mContext)
+                        .load(url)
+                        .placeholder(R.mipmap.ic_launcher)
+                        .override(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                        .fitCenter()
+                        .error(R.mipmap.ic_launcher)
+                        .into(holder.mImageHref);
 
             }
 
