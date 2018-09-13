@@ -10,7 +10,9 @@ package com.prashant.androidmvp.models;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Row {
+import java.io.Serializable;
+
+public class Row implements Serializable{
 
     @SerializedName("title")
     @Expose

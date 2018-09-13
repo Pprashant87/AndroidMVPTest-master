@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.prashant.androidmvp.R;
 import com.prashant.androidmvp.utils.AppController;
+import com.prashant.androidmvp.utils.Logger;
 import com.prashant.androidmvp.utils.network.ConnectivityReceiver;
 import com.prashant.androidmvp.view.fragments.MainCountryFragment;
 
@@ -27,13 +28,24 @@ public class MainActivity extends AppCompatActivity   {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initialization();
+        initialization(savedInstanceState);
     }
 
-    private void initialization() {
+    private void initialization(Bundle savedInstanceState) {
         mCoordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
-        MainCountryFragment fragment = new MainCountryFragment();
-        setFragment(fragment);
+        boolean addNewFragment = true;
+        if(savedInstanceState!=null)
+        {
+            addNewFragment = false;
+        }
+        if(addNewFragment) {
+            MainCountryFragment fragment = new MainCountryFragment();
+            setFragment(fragment);
+        }
+        else
+        {
+            Logger.d(TAG,"Use exist fragment");
+        }
     }
 
 

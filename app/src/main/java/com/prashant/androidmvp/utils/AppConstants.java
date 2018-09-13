@@ -15,4 +15,6 @@ public class AppConstants {
     public static final String GET_REQUEST = "GET_REQUEST";
     public static final String API_MESSAGE = "message";
 
+    public static final String COUNTRY_KEY = "COUNTRY_KEY";
+
 }

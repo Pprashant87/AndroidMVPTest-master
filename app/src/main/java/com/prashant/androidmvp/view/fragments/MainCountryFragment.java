@@ -31,11 +31,14 @@ import com.prashant.androidmvp.R;
 import com.prashant.androidmvp.models.Country;
 import com.prashant.androidmvp.models.Row;
 import com.prashant.androidmvp.presenters.CountryPresenter;
+import com.prashant.androidmvp.utils.AppConstants;
 import com.prashant.androidmvp.utils.AppController;
+import com.prashant.androidmvp.utils.Logger;
 import com.prashant.androidmvp.utils.network.ConnectivityReceiver;
 import com.prashant.androidmvp.view.adapters.CountryAdapter;
 import com.prashant.androidmvp.view.listener.MainCountryView;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class MainCountryFragment extends Fragment implements MainCountryView, ConnectivityReceiver.ConnectivityReceiverListener {
@@ -49,13 +52,12 @@ public class MainCountryFragment extends Fragment implements MainCountryView, Co
     private Button mBtnRetryError;
     private View mLayoutRecycleView, mLayoutErrorView;
     private TextView mTxtMessageError;
-
+    private Country mCountryList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -148,6 +150,7 @@ public class MainCountryFragment extends Fragment implements MainCountryView, Co
     @Override
     public void updateData(Country mCountryList) {
         clear();
+        this.mCountryList = mCountryList;
         updateListView(mCountryList);
     }
 
@@ -211,5 +214,27 @@ public class MainCountryFragment extends Fragment implements MainCountryView, Co
             displayErrorMessage(getActivity().getResources().getString(R.string.not_connected_to_internet));
 
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        Logger.d(TAG, " onSaveInstanceState");
+        if (savedInstanceState != null)
+        {
+            savedInstanceState.putSerializable(AppConstants.COUNTRY_KEY, mCountryList);
+        }
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        Logger.d(TAG, " onViewStateRestored");
+        if(savedInstanceState != null)
+        {
+            Country mCountryList = (Country) savedInstanceState.getSerializable(AppConstants.COUNTRY_KEY);
+            updateListView(mCountryList);
+        }
+
     }
 }
