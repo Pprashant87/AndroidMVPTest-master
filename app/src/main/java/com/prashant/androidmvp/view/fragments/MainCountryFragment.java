@@ -96,7 +96,7 @@ public class MainCountryFragment extends Fragment implements MainCountryView {
 
     private void setUpClickListeners() {
 
-//        if (mSwipeRefreshLayout != null) {
+        if (mSwipeRefreshLayout != null) {
             mSwipeRefreshLayout.setColorSchemeResources(R.color.colorAccent);
 
             mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -106,7 +106,7 @@ public class MainCountryFragment extends Fragment implements MainCountryView {
                     setUpFetchData();
                 }
             });
-//        }
+        }
 
         mBtnRetryError.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,7 +123,10 @@ public class MainCountryFragment extends Fragment implements MainCountryView {
             if (isConnected) {
                 mCountryPresenter.fetchData();
             }
-            checkInternetConnectivity(isConnected);
+            else
+            {
+                checkInternetConnectivity(isConnected);
+            }
         }
     }
 
@@ -181,6 +184,11 @@ public class MainCountryFragment extends Fragment implements MainCountryView {
                 }
             }
         }
+        else
+        {
+            showErrorScreen();
+            displayErrorMessage(getActivity().getResources().getString(R.string.no_data_found));
+        }
     }
 
     private void setTitleForActionBar(String mTitle) {
@@ -211,10 +219,6 @@ public class MainCountryFragment extends Fragment implements MainCountryView {
         mLayoutRecycleView.setVisibility(View.VISIBLE);
     }
 
-//    @Override
-//    public void onNetworkConnectionChanged(boolean isConnected) {
-//        checkInternetConnectivity(isConnected);
-//    }
 
     private void checkInternetConnectivity(boolean isConnected)
     {
@@ -248,8 +252,5 @@ public class MainCountryFragment extends Fragment implements MainCountryView {
         }
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
+
 }

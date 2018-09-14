@@ -1,10 +1,12 @@
 <resources>
     <string name="app_name">AndroidMVP</string>
-    <string name="connected_to_internet">Good! Connected to Internet</string>
-    <string name="not_connected_to_internet">Sorry! Not connected to internet</string>
+    <string name="connected_to_internet">Connected to Internet</string>
+    <string name="not_connected_to_internet">Please check your internet connection and try again</string>
 
     <string name="splash_screen">Splash Screen</string>
     <string name="something_went_wrong">Something went wrong!</string>
     <string name="retry">Retry</string>
+
+    <string name="no_data_found">No data found</string>
 
 </resources>

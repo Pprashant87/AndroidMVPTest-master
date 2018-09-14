@@ -39,12 +39,13 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
             addNewFragment = false;
         }
         if(addNewFragment) {
+            checkConnection();
             MainCountryFragment fragment = new MainCountryFragment();
             setFragment(fragment);
         }
         else
         {
-            Logger.d(TAG,"Use exist fragment");
+            Logger.d(TAG,"Use already exist fragment");
         }
     }
 
@@ -63,6 +64,15 @@ public class MainActivity extends AppCompatActivity implements ConnectivityRecei
         fragmentTransaction.commit();
     }
 
+    // Method to manually check connection status
+    private void checkConnection() {
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        if (!isConnected)
+        {
+            showSnack(isConnected);
+        }
+
+    }
 
     private void showSnack(boolean isConnected) {
         String message;
