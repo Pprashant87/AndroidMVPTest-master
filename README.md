@@ -5,5 +5,5 @@ AndroidMVP Test
 - Used Glide lib to dispaly images
 - Error condition screen - internet,no data,Something went wrong!
 - Orientention for save instance state
-- Support offline chache (retrofit offline cache with okhttp)
+- Support offline cache (retrofit offline cache with okhttp)
 
