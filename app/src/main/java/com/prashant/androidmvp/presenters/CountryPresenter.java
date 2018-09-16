@@ -12,7 +12,11 @@ import com.google.gson.JsonSyntaxException;
 import com.prashant.androidmvp.R;
 import com.prashant.androidmvp.models.Country;
 import com.prashant.androidmvp.service.ApiClient;
+import com.prashant.androidmvp.utils.Logger;
+import com.prashant.androidmvp.utils.network.ConnectivityReceiver;
 import com.prashant.androidmvp.view.listener.MainCountryView;
+
+import java.net.UnknownHostException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,6 +53,7 @@ public class CountryPresenter {
                     @Override
                     public void onResponse(Call<Country> call, Response<Country> response) {
                         if (response != null && response.isSuccessful()) {
+                            Logger.i(TAG, "Data was loaded from API.");
                             if (mMainCountryView != null) {
                                 mMainCountryView.hideProgress();
                             }
@@ -73,12 +78,18 @@ public class CountryPresenter {
 
                     @Override
                     public void onFailure(Call<Country> call, Throwable t) {
-                        if (mMainCountryView != null) {
-                            mMainCountryView.hideProgress();
+                        Logger.e(TAG, "Unable to load the data from API.");
+                        //Logger.e(TAG, t.getMessage());
+                        String mErrorMessage = "";
+                        if (!ConnectivityReceiver.isConnected()) {
+                            mErrorMessage = mContext.getResources().getString(R.string.not_connected_to_internet);
+                        } else {
+                            mErrorMessage = mContext.getResources().getString(R.string.something_went_wrong);
                         }
                         if (mMainCountryView != null) {
+                            mMainCountryView.hideProgress();
                             mMainCountryView.showErrorScreen();
-                            mMainCountryView.displayErrorMessage(mContext.getResources().getString(R.string.something_went_wrong));
+                            mMainCountryView.displayErrorMessage(mErrorMessage);
                         }
                     }
                 });
@@ -87,9 +98,6 @@ public class CountryPresenter {
     public void onDestroy() {
         mMainCountryView = null;
     }
-
-
-
 
 
 }

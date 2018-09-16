@@ -119,14 +119,7 @@ public class MainCountryFragment extends Fragment implements MainCountryView {
 
     private void setUpFetchData() {
         if (mCountryPresenter != null) {
-            boolean isConnected = ConnectivityReceiver.isConnected();
-            if (isConnected) {
-                mCountryPresenter.fetchData();
-            }
-            else
-            {
-                checkInternetConnectivity(isConnected);
-            }
+            mCountryPresenter.fetchData();
         }
     }
 
