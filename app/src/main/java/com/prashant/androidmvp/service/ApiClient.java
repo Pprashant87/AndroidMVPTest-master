@@ -1,5 +1,11 @@
 package com.prashant.androidmvp.service;
 
+/**
+ * @author : Prashant P
+ * Created in 2018 as an unpublished copyright work.
+ * All rights reserved.
+ */
+
 import android.content.Context;
 
 import com.prashant.androidmvp.utils.AppConstants;

@@ -1,5 +1,9 @@
 package com.prashant.androidmvp.view.adapters;
-
+/**
+ * @author : Prashant P
+ * Created in 2018 as an unpublished copyright work.
+ * All rights reserved.
+ */
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;

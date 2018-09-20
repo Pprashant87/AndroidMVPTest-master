@@ -1,5 +1,9 @@
 package com.prashant.androidmvp.view.activity;
-
+/**
+ * @author : Prashant P
+ * Created in 2018 as an unpublished copyright work.
+ * All rights reserved.
+ */
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;

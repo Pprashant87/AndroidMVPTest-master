@@ -1,5 +1,9 @@
 package com.prashant.androidmvp.Utils;
-
+/**
+ * @author : Prashant P
+ * Created in 2018 as an unpublished copyright work.
+ * All rights reserved.
+ */
 import android.view.View;
 
 import com.prashant.androidmvp.utils.ViewUtils;
