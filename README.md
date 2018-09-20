@@ -7,3 +7,7 @@ AndroidMVP Test
 - Orientention for save instance state
 - Support offline cache (retrofit offline cache with okhttp)
 
+Created same Test Project with MVVP pattern:
+Link: https://github.com/Pprashant87/AndroidMVVMTest
+
+
