@@ -36,6 +36,7 @@ import com.prashant.androidmvp.utils.AppConstants;
 import com.prashant.androidmvp.utils.AppController;
 import com.prashant.androidmvp.utils.ListUtils;
 import com.prashant.androidmvp.utils.Logger;
+import com.prashant.androidmvp.utils.ViewUtils;
 import com.prashant.androidmvp.utils.network.ConnectivityReceiver;
 import com.prashant.androidmvp.view.adapters.CountryAdapter;
 import com.prashant.androidmvp.view.listener.MainCountryView;
@@ -202,27 +203,17 @@ public class MainCountryFragment extends Fragment implements MainCountryView {
 
     @Override
     public void showErrorScreen() {
-        mLayoutErrorView.setVisibility(View.VISIBLE);
-        mLayoutRecycleView.setVisibility(View.GONE);
+        ViewUtils.showView(mLayoutErrorView);
+        ViewUtils.hideView(mLayoutRecycleView);
     }
 
     @Override
     public void hideErrorScreen() {
-        mLayoutErrorView.setVisibility(View.GONE);
-        mLayoutRecycleView.setVisibility(View.VISIBLE);
+        ViewUtils.hideView(mLayoutErrorView);
+        ViewUtils.showView(mLayoutRecycleView);
     }
 
 
-    private void checkInternetConnectivity(boolean isConnected)
-    {
-        if (isConnected) {
-            hideErrorScreen();
-        } else {
-            showErrorScreen();
-            displayErrorMessage(getActivity().getResources().getString(R.string.not_connected_to_internet));
-
-        }
-    }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
