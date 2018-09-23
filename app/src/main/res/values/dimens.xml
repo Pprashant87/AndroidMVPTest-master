@@ -33,4 +33,10 @@
     <dimen name="text_error_size">20sp</dimen>
     <dimen name="margin_btn_retry">20dp</dimen>
 
+    <dimen name="padding_5">5dp</dimen>
+    <dimen name="padding_10">10dp</dimen>
+    <dimen name="padding_20">20dp</dimen>
+    <dimen name="padding_30">30dp</dimen>
+
+
 </resources>

@@ -63,7 +63,6 @@ public class MainCountryFragment extends Fragment implements MainCountryView {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        setPresenter();
     }
 
     @Nullable
@@ -92,7 +91,7 @@ public class MainCountryFragment extends Fragment implements MainCountryView {
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.recycler_view);
         mSwipeRefreshLayout = (SwipeRefreshLayout) mView.findViewById(R.id.swipe_refresh_layout);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
+        setPresenter();
         setUpClickListeners();
     }
 

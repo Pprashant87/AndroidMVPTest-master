@@ -7,6 +7,7 @@ package com.prashant.androidmvp.presenters;
  */
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.google.gson.JsonSyntaxException;
 import com.prashant.androidmvp.R;
@@ -17,6 +18,7 @@ import com.prashant.androidmvp.utils.Logger;
 import com.prashant.androidmvp.utils.network.ConnectivityReceiver;
 import com.prashant.androidmvp.view.listener.MainCountryView;
 
+import java.io.IOException;
 import java.net.UnknownHostException;
 
 import retrofit2.Call;
@@ -80,7 +82,7 @@ public class CountryPresenter {
                         Logger.e(TAG, "Unable to load the data from API.");
                         //Logger.e(TAG, t.getMessage());
                         String mErrorMessage = "";
-                        if (!ConnectivityReceiver.isConnected()) {
+                        if (t instanceof UnknownHostException) {
                             mErrorMessage = AppController.getInstance().getResources().getString(R.string.not_connected_to_internet);
                         } else {
                             mErrorMessage = AppController.getInstance().getResources().getString(R.string.something_went_wrong);
