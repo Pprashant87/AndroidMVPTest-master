@@ -12,6 +12,7 @@ import com.google.gson.JsonSyntaxException;
 import com.prashant.androidmvp.R;
 import com.prashant.androidmvp.models.Country;
 import com.prashant.androidmvp.service.ApiClient;
+import com.prashant.androidmvp.utils.AppController;
 import com.prashant.androidmvp.utils.Logger;
 import com.prashant.androidmvp.utils.network.ConnectivityReceiver;
 import com.prashant.androidmvp.view.listener.MainCountryView;
@@ -25,12 +26,10 @@ import retrofit2.Response;
 public class CountryPresenter {
 
     private static final String TAG = CountryPresenter.class.getSimpleName();
-    private Context mContext;
     private MainCountryView mMainCountryView;
     private ApiClient mApiClient;
 
-    public CountryPresenter(Context mContext, MainCountryView mMainCountryView) {
-        this.mContext = mContext;
+    public CountryPresenter(MainCountryView mMainCountryView) {
         this.mMainCountryView = mMainCountryView;
         if (mApiClient == null) {
             mApiClient = new ApiClient();
@@ -70,7 +69,7 @@ public class CountryPresenter {
                         } else {
                             if (mMainCountryView != null) {
                                 mMainCountryView.showErrorScreen();
-                                mMainCountryView.displayErrorMessage(mContext.getResources().getString(R.string.something_went_wrong));
+                                mMainCountryView.displayErrorMessage(AppController.getInstance().getResources().getString(R.string.something_went_wrong));
                             }
                         }
 
@@ -82,9 +81,9 @@ public class CountryPresenter {
                         //Logger.e(TAG, t.getMessage());
                         String mErrorMessage = "";
                         if (!ConnectivityReceiver.isConnected()) {
-                            mErrorMessage = mContext.getResources().getString(R.string.not_connected_to_internet);
+                            mErrorMessage = AppController.getInstance().getResources().getString(R.string.not_connected_to_internet);
                         } else {
-                            mErrorMessage = mContext.getResources().getString(R.string.something_went_wrong);
+                            mErrorMessage = AppController.getInstance().getResources().getString(R.string.something_went_wrong);
                         }
                         if (mMainCountryView != null) {
                             mMainCountryView.hideProgress();

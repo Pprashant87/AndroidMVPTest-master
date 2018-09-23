@@ -24,7 +24,7 @@ public class ViewUtilsTest {
     View view;
 
     @Before
-    public void init() {
+    public void setup() {
         MockitoAnnotations.initMocks(this);
     }
 
